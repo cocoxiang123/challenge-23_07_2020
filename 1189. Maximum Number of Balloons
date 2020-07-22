@@ -1,0 +1,63 @@
+Given a string text, you want to use the characters of text to form as many instances of the word "balloon" as possible.
+
+You can use each character in text at most once. Return the maximum number of instances that can be formed.
+
+ 
+
+Example 1:
+
+
+
+Input: text = "nlaebolko"
+Output: 1
+Example 2:
+
+
+
+Input: text = "loonbalxballpoon"
+Output: 2
+Example 3:
+
+Input: text = "leetcode"
+Output: 0
+
+
+solution:
+/**
+ * @param {string} text
+ * @return {number}
+ */
+var maxNumberOfBalloons = function(text) {
+    var word = "balloon";
+    var count = 0; 
+    while(text.length){
+    for (var i=0;i<word.length;i++){
+        var letterLocation = text.indexOf(word[i]);
+        if(letterLocation==-1){
+           return count;
+        }
+        else{
+        text = text.slice(0,letterLocation)+text.slice(letterLocation+1)
+        }
+    }
+    count++;
+    }
+    return count;
+};
+
+solution2:
+const maxNumberOfBalloons = text => {
+  let obj = {}, balloonCount = 0;
+  for (let el of text) {
+    obj[el] = (obj[el] || 0) + 1;
+  }
+  while (obj['a'] > 0 && obj['b'] >0 && obj['l']>1 && obj['n']>0 && obj['o']>1) {
+    balloonCount++;
+    obj['a']--;
+    obj['b']--;
+    obj['l'] -= 2;
+    obj['n']--;
+    obj['o'] -= 2;
+  }
+  return balloonCount;
+}
